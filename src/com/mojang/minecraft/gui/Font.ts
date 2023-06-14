@@ -94,7 +94,7 @@ export class Font {
             }
             let ch: number = string.charAt(i8).charCodeAt(0)
             color = ch % 16 << 3
-			i9 = ch / 16 << 3
+			i9 = Math.trunc(ch / 16) << 3
             t.vertexUV((x + i7), (y + 8), 0.0, (color + 8) / 128.0, i9 / 128.0);
             t.vertexUV((x + i7 + 8), (y + 8), 0.0, color / 128.0, i9 / 128.0);
             t.vertexUV((x + i7 + 8), y, 0.0, color / 128.0, (i9 + 8) / 128.0);
@@ -104,6 +104,7 @@ export class Font {
             t.vertexUV((x + i7), (y + 8), 0.0, (color + 8) / 128.0, i9 / 128.0);
             
 			i7 += this.charWidths[ch]
+            console.log(this.charWidths[ch])
         }
         
         this.vertices = t.flush()
