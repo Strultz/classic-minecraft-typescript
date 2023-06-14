@@ -86,7 +86,7 @@ export class Font {
 				if (darken) {
 					color = (color & 16579836) >> 2
 				}
-
+                console.log(color);
 				t.color_i(color);
             }
             let ch: number = string.charAt(i8).charCodeAt(0)

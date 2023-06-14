@@ -364,20 +364,21 @@ export class Minecraft {
     }
 
     private drawGui(a: number): void {
-        let i26: number = Math.trunc(this.width * 240 / this.height);
-		let i25: number = Math.trunc(this.height * 240 / this.height);
+        let wt: number = Math.trunc(this.width * 240 / this.height);
+		let ht: number = Math.trunc(this.height * 240 / this.height);
 		gl.clear(gl.DEPTH_BUFFER_BIT);
 		matrix.setActive(Matrix.PROJECTION)
 		matrix.loadIdentity()
-		matrix.ortho(0.0, i26, i25, 0.0, 100.0, 300.0)
+		matrix.ortho(0.0, wt, ht, 0.0, 100.0, 300.0)
 		matrix.setActive(Matrix.MODELVIEW)
 		matrix.loadIdentity()
 		matrix.translate(0.0, 0.0, -200.0);
         this.setupShader(0.0)
 		this.checkGlError("GUI: Init");
-        this.font.drawShadow("Epic Font Test!", 2, 2, 0xFFFFFF);
+        this.font.drawShadow(VERSION_STRING, 2, 2, 0xFFFFFF);
         this.font.drawShadow("&eYellow &cRed &2And more color.. &33&44&55&66 lol", 2, 22, 0xFFFFFF);
-        this.font.drawShadow("Cool1*", 48 - this.font.getWidth("Cool1*"), 12, 0xFFFFFF);
+        this.font.drawShadow("Cool1*", wt - 2 - this.font.getWidth("Cool1*"), 12, 0xFFFFFF);
+        this.font.drawShadow(this.fpsString, 2, 12, 0xFFFFFF);
 		this.checkGlError("GUI: Draw text");
     }
 
