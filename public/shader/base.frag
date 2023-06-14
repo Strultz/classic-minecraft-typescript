@@ -5,7 +5,7 @@ uniform sampler2D uSampler;
 uniform float alphaThreshold;
 
 void main(void) {
-    highp vec3 texelColor = texture2D(uSampler, vTextureCoord);
+    highp vec4 texelColor = texture2D(uSampler, vTextureCoord);
 
     if(texelColor.a <= alphaThreshold)
         discard;
