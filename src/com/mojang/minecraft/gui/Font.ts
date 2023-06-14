@@ -3,24 +3,24 @@ import { gl } from "../Minecraft";
 
 export class Font {
     public charWidths: number[] = []
-    public fontTexture: number = 0
+    public fontTexture: WebGLTexture = 0
     
-    public async loadImage(imageUrl): Image {
-        let img: Image;
+    public async loadImage(imageUrl): HTMLImageElement {
+        let img: HTMLImageElement;
         const imageLoadPromise = new Promise(resolve => {
-            img = new Image();
+            img = new window.Image();
             img.onload = resolve;
             img.src = imageUrl;
         });
 
         await imageLoadPromise;
         return img;
-    }  
+    }
 
-    public constructor(resourceName: String, textureManager: Textures) {
+    public constructor(resourceName: string, textureManager: Textures) {
         let canvas = document.createElement("canvas")
         let context = canvas.getContext("2d")
-        let img: Image = loadImage(resourceName)
+        let img: Image = this.loadImage(resourceName)
         context.drawImage(img, 0, 0)
         
         let i4: number = img.width
