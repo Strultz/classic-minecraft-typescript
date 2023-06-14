@@ -302,6 +302,8 @@ export class Minecraft {
     }
 
     public render(a: number): void {
+		if (shader == null) return
+        gl.uniform1f(shader.getUniformLocation("alphaThreshold"), 0.0)
         gl.viewport(0, 0, this.width, this.height)
         if (this.mouseGrabbed) {
             let xo = 0.0
