@@ -19,9 +19,6 @@ void main(void) {
         texelColor = vec4(1.0,1.0,1.0,1.0);
     }
 
-    if(texelColor.a <= alphaThreshold)
-        discard;
-
     highp vec4 rgba = vec4(texelColor.rgb * vColor, 1.0);
 
     #define LOG2 1.442695
@@ -29,6 +26,9 @@ void main(void) {
     highp float fogDistance = length(vPosition);
     highp float fogAmount = 1.0 - exp2(-uFogDensity * uFogDensity * fogDistance * fogDistance * LOG2);
     fogAmount = clamp(fogAmount, 0.0, 1.0);
+
+    if(texelColor.a <= alphaThreshold)
+        discard;
 
     gl_FragColor = mix(rgba, uFogColor, fogAmount);
 }
