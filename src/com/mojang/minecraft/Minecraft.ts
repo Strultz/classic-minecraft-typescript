@@ -15,7 +15,7 @@ import { Frustum } from "./renderer/Frustum";
 import { Shader } from "../../../shader";
 import { Tiles } from "./level/tile/Tiles";
 import { Vec3 } from "./phys/Vec3";
-import { Tesselator } from "../renderer/Tesselator";
+import { Tesselator } from "./renderer/Tesselator";
 import { Font } from "./gui/Font";
 
 export let gl: WebGLRenderingContext
