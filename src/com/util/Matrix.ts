@@ -48,7 +48,7 @@ export class Matrix {
     }
 
     public perspective(fov: number, aspect: number, near: number, far: number): void {
-        mat4.perspective(this.peek(), fov * (Math.PI / 180.0), aspect, near, far)
+        mat4.perspective(this.peek(), fov * Math.PI / 180, aspect, near, far)
     }
 
     public ortho(left: number, right: number, bottom: number, top: number, near: number, far: number): void {
