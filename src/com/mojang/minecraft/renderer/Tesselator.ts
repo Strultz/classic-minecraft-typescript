@@ -89,4 +89,13 @@ export class Tesselator {
         const b: number = c & 0xff
         this.color_f(r / 255, g / 255, b / 255)
     }
+    
+    // Replicating removed gl 1.1 functionality
+    public static alphaFunc(av: number): void { // glAlphaFunc
+        gl.uniform1f(shader.getUniformLocation("alphaThreshold"), av)
+    }
+    
+    public static setUseTex(uv: number): void { // glDisable(GL_TEXTURE_2D)
+        gl.uniform1i(shader.getUniformLocation("useTex"), uv)
+    }
 }

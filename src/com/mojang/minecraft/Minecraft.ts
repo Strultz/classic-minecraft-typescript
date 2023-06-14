@@ -312,15 +312,11 @@ export class Minecraft {
         this.hitResult = this.level.clip(playerVec, endVec)
     }
     
-    private alphaFunc(av: number): void {
-        gl.uniform1f(shader.getUniformLocation("alphaThreshold"), av)
-    }
-    
     private setupShader(av: number): void {
         shader.use();
         gl.uniformMatrix4fv(shader.getUniformLocation("uMVMatrix"), false, new Float32Array(matrix.getFloat(Matrix.MODELVIEW)));
         gl.uniformMatrix4fv(shader.getUniformLocation("uPMatrix"), false, new Float32Array(matrix.getFloat(Matrix.PROJECTION)));
-        this.alphaFunc(av)
+        Tesselator.alphaFunc(av)
     }
 
     public render(a: number): void {
@@ -359,9 +355,9 @@ export class Minecraft {
         this.particleEngine.render(this.player, a, 1)
         this.checkGlError("Rendered rest")
         if (this.hitResult != null) {
-            this.alphaFunc(-1.0)
+            Tesselator.alphaFunc(-1.0)
             this.levelRenderer.renderHit(this.hitResult, this.editMode, this.paintTexture)
-            this.alphaFunc(0.0)
+            Tesselator.alphaFunc(0.0)
         }
         this.checkGlError("Rendered hit")
         this.drawGui(a)
@@ -400,11 +396,11 @@ export class Minecraft {
         
         
         t.vertex((i33 - 4), (i9 + 1), 0.0);
-        t.vertex((i33 - 4), i9, 0.0);
+        t.vertex((i33 + 5), (i9 + 1), 0.0);
         t.vertex((i33 + 5), i9, 0.0);
         
         t.vertex((i33 + 5), i9, 0.0);
-        t.vertex((i33 + 5), (i9 + 1), 0.0);
+        t.vertex((i33 - 4), i9, 0.0);
         t.vertex((i33 - 4), (i9 + 1), 0.0);
         Tesselator.drawBuffer(this.buffer, t.flush())
     }

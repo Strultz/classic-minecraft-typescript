@@ -5,9 +5,15 @@ varying highp vec3 vColor;
 
 uniform sampler2D uSampler;
 uniform highp float alphaThreshold;
+uniform int useTex;
 
 void main(void) {
-    highp vec4 texelColor = texture2D(uSampler, vTextureCoord);
+    highp vec4 texelColor;
+    if (useTex == 1) {
+        texelColor = texture2D(uSampler, vTextureCoord);
+    } else {
+        texelColor = vec4(1.0,1.0,1.0,1.0);
+    }
 
     if(texelColor.a <= alphaThreshold)
         discard;
