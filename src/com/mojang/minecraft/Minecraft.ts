@@ -282,6 +282,7 @@ export class Minecraft {
         matrix.setActive(Matrix.MODELVIEW)
         matrix.loadIdentity()
         this.moveCameraToPlayer(a)
+        this.setupShader(0.0)
     }
 
     private setupPickCamera(a: number, x: number, y: number): void {
@@ -304,11 +305,15 @@ export class Minecraft {
         this.hitResult = this.level.clip(playerVec, endVec)
     }
     
+    private alphaFunc(av: number): void {
+        gl.uniform1f(shader.getUniformLocation("alphaThreshold"), av)
+    }
+    
     private setupShader(av: number): void {
         shader.use();
         gl.uniformMatrix4fv(shader.getUniformLocation("uMVMatrix"), false, new Float32Array(matrix.getFloat(Matrix.MODELVIEW)));
         gl.uniformMatrix4fv(shader.getUniformLocation("uPMatrix"), false, new Float32Array(matrix.getFloat(Matrix.PROJECTION)));
-        gl.uniform1f(shader.getUniformLocation("alphaThreshold"), av)
+        alphaFunc(av)
     }
 
     public render(a: number): void {
@@ -331,7 +336,6 @@ export class Minecraft {
         let frustum = Frustum.getFrustum()
         this.levelRenderer.updateDirtyChunks(this.player)
         this.checkGlError("Update chunks")
-        this.setupShader(0.0)
         this.setupFog(0)
         this.levelRenderer.render(this.player, 0)
         this.checkGlError("Rendered level")
@@ -348,9 +352,9 @@ export class Minecraft {
         this.particleEngine.render(this.player, a, 1)
         this.checkGlError("Rendered rest")
         if (this.hitResult != null) {
-            gl.uniform1f(shader.getUniformLocation("alphaThreshold"), -1.0)
+            alphaFunc(-1.0)
             this.levelRenderer.renderHit(this.hitResult, this.editMode, this.paintTexture)
-            gl.uniform1f(shader.getUniformLocation("alphaThreshold"), 0.0)
+            alphaFunc(0.0)
         }
         this.checkGlError("Rendered hit")
         this.drawGui(a)
@@ -372,7 +376,8 @@ export class Minecraft {
         this.setupShader(0.0)
 		this.checkGlError("GUI: Init");
         this.font.drawShadow("Epic Font Test!", 2, 2, 0xFFFFFF);
-        this.font.drawShadow("Cool1*", 98 - this.font.getWidth("Cool1*"), 2, 0xFFFFFF);
+        this.font.drawShadow("&eYellow &cRed &2And more color.. &33&44&55&66 lol", 2, 22, 0xFFFFFF);
+        this.font.drawShadow("Cool1*", 48 - this.font.getWidth("Cool1*"), 12, 0xFFFFFF);
 		this.checkGlError("GUI: Draw text");
     }
 
