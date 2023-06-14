@@ -104,7 +104,7 @@ export class Font {
             t.vertexUV((x + i7), (y + 8), 0.0, (color + 8) / 128.0, i9 / 128.0);
             
 			i7 += this.charWidths[ch]
-            console.log(this.charWidths[ch])
+            console.log(ch)
         }
         
         this.vertices = t.flush()
