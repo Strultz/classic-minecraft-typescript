@@ -361,7 +361,7 @@ export class Minecraft {
 		matrix.ortho(0.0, i26, i25, 0.0, 100.0, 300.0)
 		matrix.setActive(Matrix.MODELVIEW)
 		matrix.loadIdentity()
-		matrix.translate(0.0F, 0.0F, -200.0F);
+		matrix.translate(0.0, 0.0, -200.0);
 		reportGLError("GUI: Init");
         this.font.drawShadow("Epic Font Test!", 2, 2, 0xFFFFFF);
         this.font.drawShadow("Cool1*", 98 - this.font.getWidth("Cool1*"), 2, 0xFFFFFF);
