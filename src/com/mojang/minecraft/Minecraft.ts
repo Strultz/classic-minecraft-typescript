@@ -385,17 +385,17 @@ export class Minecraft {
         this.font.drawShadow(Minecraft.VERSION_STRING, 2, 2, 0xFFFFFF);
         this.font.drawShadow(this.fpsString, 2, 12, 0xFFFFFF);
         this.checkGlError("GUI: Draw text");
-        let i33: number = wt / 2
-        let i9: number = ht / 2
+        let i33: number = Math.trunc(wt / 2)
+        let i9: number = Math.trunc(ht / 2)
         let t = Tesselator.instance
         t.color_f(1.0, 1.0, 1.0)
         t.init(this.buffer)
         t.vertex(i33, (i9 + 5), 0.0);
-        t.vertex(i33, (i9 - 4), 0.0);
+        t.vertex((i33 + 1), (i9 + 5), 0.0);
         t.vertex((i33 + 1), (i9 - 4), 0.0);
         
         t.vertex((i33 + 1), (i9 - 4), 0.0);
-        t.vertex((i33 + 1), (i9 + 5), 0.0);
+        t.vertex(i33, (i9 - 4), 0.0);
         t.vertex(i33, (i9 + 5), 0.0);
         
         
@@ -420,8 +420,8 @@ export class Minecraft {
 
 export function main() {
     const canvas = document.createElement("canvas")
-    canvas.width = window.innerWidth
-    canvas.height = window.innerHeight
+    canvas.width = 854 // window.innerWidth
+    canvas.height = 480 // window.innerHeight
     document.body.appendChild(canvas)
 
     let g = canvas.getContext("webgl", {antialias: false})
