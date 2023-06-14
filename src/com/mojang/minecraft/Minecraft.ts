@@ -102,6 +102,10 @@ export class Minecraft {
         this.player = new Player(this.level)
         this.particleEngine = new ParticleEngine(this.level, this.textures)
         this.checkGlError("Post startup")
+
+        window.onunload = () => {
+            this.destroy()
+        }
     }
 
     private checkGlError(string: string): void {
@@ -204,8 +208,12 @@ export class Minecraft {
     public tick(): void {
         keyboard.update()
         this.mouseGrabbed = document.pointerLockElement == this.parent
-        if (!this.mouseGrabbed && mouse.buttonPressed(MouseButton.LEFT) || mouse.buttonPressed(MouseButton.RIGHT)) {
+        mouse.setLock(this.mouseGrabbed)
+        if (!this.mouseGrabbed && (mouse.buttonPressed(MouseButton.LEFT) || mouse.buttonPressed(MouseButton.RIGHT))) {
             this.grabMouse()
+            this.mouse0 = true
+            this.mouse1 = true
+            return
         }
         if (this.mouseGrabbed) {
             // Mouse
@@ -285,15 +293,11 @@ export class Minecraft {
     private setupCamera(a: number): void {
         matrix.setActive(Matrix.PROJECTION)
         matrix.loadIdentity()
-        matrix.perspective(70, this.width / this.height, 0.05, 1000)
+        matrix.perspective(90, this.width / this.height, 0.05, 1000)
         matrix.setActive(Matrix.MODELVIEW)
         matrix.loadIdentity()
         this.moveCameraToPlayer(a)
         this.setupShader(0.0)
-    }
-
-    private setupPickCamera(a: number, x: number, y: number): void {
-        // TODO
     }
 
     private pick(a: number): void {
@@ -327,7 +331,10 @@ export class Minecraft {
             let yo = 0.0
             xo = mouse.delta.x
             yo = mouse.delta.y
-            this.player.turn(xo, yo * this.yMouseAxis)
+            if (Math.abs(xo) < 100)
+            {
+                this.player.turn(xo, yo * this.yMouseAxis)
+            }
         }
         this.checkGlError("Set viewport")
         this.pick(a)
@@ -406,7 +413,15 @@ export class Minecraft {
     }
 
     private setupFog(i: number): void {
-        // TODO
+        if (shader == null) return
+        shader.use()
+        if (i == 0) {
+            gl.uniform1f(shader.getUniformLocation("uFogDensity"), 0.001)
+            gl.uniform4fv(shader.getUniformLocation("uFogColor"), this.fogColor0)
+        } else if (i == 1) {
+            gl.uniform1f(shader.getUniformLocation("uFogDensity"), 0.01)
+            gl.uniform4fv(shader.getUniformLocation("uFogColor"), this.fogColor1)
+        }
     }
 
     public static checkError(): void {
