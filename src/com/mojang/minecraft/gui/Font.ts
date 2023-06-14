@@ -20,7 +20,7 @@ export class Font {
         const imageLoadPromise = new Promise(resolve => {
             img = new window.Image();
             img.onload = resolve;
-            img.src = imageUrl;
+            img.src = resourceName;
         });
         imageLoadPromise.then(() => {
             context.drawImage(img, 0, 0)
