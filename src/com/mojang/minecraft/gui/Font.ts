@@ -67,11 +67,11 @@ export class Font {
     public getWidth(string: string): number {
         let i2: number = 0
         
-        for (let c3 of string) {
-            if(c3 == '&') {
+        for (let i3: number = 0; i3 < string.length; ++i3) {
+            if(string.charAt(i3) == '&') {
 				++i3
 			} else {
-				i2 += this.charWidths[c3]
+				i2 += this.charWidths[string.charAt(i3).charCodeAt(0)]
 			}
         }
         
