@@ -89,7 +89,7 @@ export class Minecraft {
         matrix.loadIdentity()
         matrix.setActive(Matrix.MODELVIEW)
         this.checkGlError("Startup")
-        this.font = new Font("/default.png", this.textures)
+        this.font = new Font("./default.png", this.textures)
         this.level = new Level(256, 256, 64)
         this.levelRenderer = new LevelRenderer(this.level, this.textures)
         this.player = new Player(this.level)
