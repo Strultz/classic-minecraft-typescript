@@ -5,10 +5,7 @@ export class Tesselator {
     private vertices: number = 0
     private u: number = 0
     private v: number = 0
-    private r: number = 0
-    private g: number = 0
-    private b: number = 0
-    private a: number = 0
+    private color: number = 0
     private len: number = 3
     private p: number = 0
     private buffer: WebGLBuffer = null
@@ -22,13 +19,13 @@ export class Tesselator {
 
         gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
         // Texture UV
-        gl.vertexAttribPointer(0, 2, gl.FLOAT, false, bytesPerFloat * 8, 0)
+        gl.vertexAttribPointer(0, 2, gl.FLOAT, false, bytesPerFloat * 6, 0)
         gl.enableVertexAttribArray(0)
-        // Color RGB
-        gl.vertexAttribPointer(1, 4, gl.FLOAT, false, bytesPerFloat * 8, bytesPerFloat * 2)
+        // Color RGBA
+        gl.vertexAttribPointer(1, 4, gl.UNSIGNED_BYTE, false, bytesPerFloat * 6, bytesPerFloat * 2)
         gl.enableVertexAttribArray(1)
         // Vertex XYZ
-        gl.vertexAttribPointer(2, 3, gl.FLOAT, false, bytesPerFloat * 8, bytesPerFloat * 6)
+        gl.vertexAttribPointer(2, 3, gl.FLOAT, false, bytesPerFloat * 6, bytesPerFloat * 3)
         gl.enableVertexAttribArray(2)
 
         gl.drawArrays(gl.TRIANGLES, 0, vertices)
@@ -60,11 +57,59 @@ export class Tesselator {
         this.v = v
     }
 
+    public color_i_a(r: number, g: number, b: number, a: number): void {
+        if (r > 255)
+        {
+            r = 255
+        }
+
+        if (g > 255)
+        {
+            g = 255
+        }
+
+        if (b > 255)
+        {
+            b = 255
+        }
+
+        if (a > 255)
+        {
+            a = 255
+        }
+
+        if (r < 0)
+        {
+            r = 0
+        }
+
+        if (g < 0)
+        {
+            g = 0
+        }
+
+        if (b < 0)
+        {
+            b = 0
+        }
+
+        if (a < 0)
+        {
+            a = 0
+        }
+        
+        let uInt32 = new Uint32Array([0x11223344]);
+        let uInt8 = new Uint8Array(uInt32.buffer);
+     
+        if(uInt8[0] === 0x44) {
+            this.color = a << 24 | b << 16 | g << 8 | r
+        } else {
+            this.color = r << 24 | g << 16 | b << 8 | a
+        }
+    }
+
     public color_f_a(r: number, g: number, b: number, a: number): void {
-        this.r = r
-        this.g = g
-        this.b = b
-        this.a = a
+        this.color_i_a(Math.trunc(r * 255), Math.trunc(g * 255), Math.trunc(b * 255), Math.trunc(a * 255))
     }
 
     public color_f(r: number, g: number, b: number): void {
@@ -79,10 +124,7 @@ export class Tesselator {
     public vertex(x: number, y: number, z: number): void {
         this.array.push(this.u)
         this.array.push(this.v)
-        this.array.push(this.r)
-        this.array.push(this.g)
-        this.array.push(this.b)
-        this.array.push(this.a)
+        this.array.push(this.color)
         this.array.push(x)
         this.array.push(y)
         this.array.push(z)
