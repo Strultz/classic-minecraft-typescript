@@ -22,7 +22,7 @@ export class Tesselator {
         gl.vertexAttribPointer(0, 2, gl.FLOAT, false, bytesPerFloat * 6, 0)
         gl.enableVertexAttribArray(0)
         // Color RGBA
-        gl.vertexAttribPointer(1, 4, gl.UNSIGNED_BYTE, false, bytesPerFloat * 6, bytesPerFloat * 2)
+        gl.vertexAttribPointer(1, 4, gl.UNSIGNED_BYTE, true, bytesPerFloat * 6, bytesPerFloat * 2)
         gl.enableVertexAttribArray(1)
         // Vertex XYZ
         gl.vertexAttribPointer(2, 3, gl.FLOAT, false, bytesPerFloat * 6, bytesPerFloat * 3)
@@ -106,8 +106,6 @@ export class Tesselator {
         } else {
             this.color = r << 24 | g << 16 | b << 8 | a
         }
-        
-        console.log(this.color)
     }
 
     public color_f_a(r: number, g: number, b: number, a: number): void {
