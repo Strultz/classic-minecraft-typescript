@@ -375,7 +375,7 @@ export class Minecraft {
 		matrix.translate(0.0, 0.0, -200.0);
         this.setupShader(0.0)
 		this.checkGlError("GUI: Init");
-        this.font.drawShadow(VERSION_STRING, 2, 2, 0xFFFFFF);
+        this.font.drawShadow(Minecraft.VERSION_STRING, 2, 2, 0xFFFFFF);
         this.font.drawShadow("&eYellow &cRed &2And more color.. &33&44&55&66 lol", 2, 22, 0xFFFFFF);
         this.font.drawShadow("Cool1*", wt - 2 - this.font.getWidth("Cool1*"), 12, 0xFFFFFF);
         this.font.drawShadow(this.fpsString, 2, 12, 0xFFFFFF);
