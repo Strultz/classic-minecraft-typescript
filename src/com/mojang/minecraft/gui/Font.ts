@@ -4,16 +4,28 @@ import { gl } from "../Minecraft";
 export class Font {
     public charWidths: number[] = []
     public fontTexture: number = 0
+    
+    public async loadImage(imageUrl): Image {
+        let img: Image;
+        const imageLoadPromise = new Promise(resolve => {
+            img = new Image();
+            img.onload = resolve;
+            img.src = imageUrl;
+        });
+
+        await imageLoadPromise;
+        return img;
+    }  
 
     public constructor(resourceName: String, textureManager: Textures) {
-        var canvas = document.createElement("canvas")
-        var context = canvas.getContext("2d")
-        var img = document.getElementById("fontImg")
+        let canvas = document.createElement("canvas")
+        let context = canvas.getContext("2d")
+        let img: Image = loadImage(resourceName)
         context.drawImage(img, 0, 0)
         
         let i4: number = img.width
         let i5: number = img.height
-        var i6: number[] = context.getImageData(0, 0, i4, i5)
+        let i6 = context.getImageData(0, 0, i4, i5)
         
         for (let i14: number = 0; i14 < 256; ++i14) {
             i5 = i14 % 16;
@@ -26,7 +38,7 @@ export class Font {
                 
                 for (let i11: number = 0; i11 < 8; ++i11) {
                     let i12: number = ((i7 << 3) + i11) * i4
-                    if (i6[(i10 + i12) * 4 + 3] > 128) {
+                    if (i6.data[(i10 + i12) * 4 + 3] > 128) {
 						z9 = false
 					}
                 }
