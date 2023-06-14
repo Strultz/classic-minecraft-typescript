@@ -5,6 +5,8 @@ import { Tesselator } from "../renderer/Tesselator";
 export class Font {
     public charWidths: number[] = []
     public fontTexture: WebGLTexture = null
+    private buffer: WebGLBuffer
+    private vertices: number = 0
     
     public async loadImage(imageUrl): Promise<HTMLImageElement> {
         let img: HTMLImageElement;
@@ -19,6 +21,10 @@ export class Font {
     }
 
     public constructor(resourceName: string, textureManager: Textures) {
+        let buf = gl.createBuffer()
+        if (!buf) throw new Error("Failed to create buffer")
+        this.buffer = buf
+        
         let canvas = document.createElement("canvas")
         let context = canvas.getContext("2d")
         this.loadImage(resourceName).then(img => {
@@ -69,7 +75,7 @@ export class Font {
         gl.enable(gl.TEXTURE_2D)
 		gl.bindTexture(gl.TEXTURE_2D, this.fontTexture);
         let t = Tesselator.instance
-        t.init()
+        t.init(this.buffer)
         t.color_i(color)
         
         let i7: number = 0
@@ -97,7 +103,8 @@ export class Font {
 			i7 += this.charWidths[ch]
         }
         
-        t.flush()
+        this.vertices = t.flush()
+        Tesselator.drawBuffer(this.buffer, this.vertices)
         //  gl.disable(gl.TEXTURE_2D)
     }
     
