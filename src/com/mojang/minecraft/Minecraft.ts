@@ -354,6 +354,7 @@ export class Minecraft {
 
     private drawGui(a: number): void {
         // TODO
+        font.drawShadow("Epic Font Test!", 2, 2, 0xFFFFFF);
     }
 
     private setupFog(i: number): void {

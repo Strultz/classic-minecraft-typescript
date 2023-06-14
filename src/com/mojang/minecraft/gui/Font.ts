@@ -1,5 +1,6 @@
-import { Textures } from "../renderer/Textures";
 import { gl } from "../Minecraft";
+import { Textures } from "../renderer/Textures";
+import { Tesselator } from "../renderer/Tesselator";
 
 export class Font {
     public charWidths: number[] = []
@@ -61,7 +62,42 @@ export class Font {
     }
     
     public draw(string: string, x: number, y: number, color: number, darken: boolean): void {
-    
+        if (darken) {
+			color = (color & 16579836) >> 2
+		}
+        
+        gl.enable(gl.TEXTURE_2D)
+		gl.bindTexture(gl.TEXTURE_2D, this.fontTexture);
+        let t = Tesselator.instance
+        t.begin()
+        t.color_i(color)
+        
+        let i7: number = 0
+        for (let i8: number = 0; i8 < string.length; ++i8) {
+            let i9: number
+            if(string.charAt(i8) == '&') {
+                i9 = ((color = "0123456789abcdef".indexOf(c12[i8 + 1])) & 8) << 3
+                let i10: number = (color & 1) * 191 + i9
+                let i11: number = ((color & 2) >> 1) * 191 + i9
+                color = ((color & 4) >> 2) * 191 + i9 << 16 | i11 << 8 | i10
+                i8 += 2
+				if (darken) {
+					color = (color & 16579836) >> 2
+				}
+
+				t.color_i(color);
+            }
+            color = c12[i8] % 16 << 3
+			i9 = c12[i8] / 16 << 3
+			t.vertexUV((x + i7), (y + 8), 0.0, color / 128.0, (i9 + 8) / 128.0)
+			t.vertexUV((x + i7 + 8), (y + 8), 0.0, (color + 8) / 128.0, (i9 + 8) / 128.0)
+			t.vertexUV((x + i7 + 8), y, 0.0, (color + 8) / 128.0, i9 / 128.0)
+			t.vertexUV((x + i7), y, 0.0, color / 128.0, i9 / 128.0)
+			i7 += this.charWidths[string.charAt(i8).charCodeAt(0)]
+        }
+        
+        t.flush()
+        //  gl.disable(gl.TEXTURE_2D)
     }
     
     public getWidth(string: string): number {
