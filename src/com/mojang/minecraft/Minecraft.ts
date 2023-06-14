@@ -390,21 +390,21 @@ export class Minecraft {
         let t = Tesselator.instance
         t.color_f(1.0, 1.0, 1.0)
         t.init(this.buffer)
-        t.vertexUV(i33, (i9 + 5), 0.0);
-        t.vertexUV((i33 + 1), (i9 + 5), 0.0);
-        t.vertexUV((i33 + 1), (i9 - 4), 0.0);
+        t.vertex(i33, (i9 + 5), 0.0);
+        t.vertex((i33 + 1), (i9 + 5), 0.0);
+        t.vertex((i33 + 1), (i9 - 4), 0.0);
         
-        t.vertexUV((i33 + 1), (i9 - 4), 0.0);
-        t.vertexUV(i33, (i9 - 4), 0.0);
-        t.vertexUV(i33, (i9 + 5), 0.0);
+        t.vertex((i33 + 1), (i9 - 4), 0.0);
+        t.vertex(i33, (i9 - 4), 0.0);
+        t.vertex(i33, (i9 + 5), 0.0);
         
-        t.vertexUV((i33 - 4), (i9 + 1), 0.0);
-        t.vertexUV((i33 + 5), (i9 + 1), 0.0);
-        t.vertexUV((i33 + 5), i9, 0.0);
+        t.vertex((i33 - 4), (i9 + 1), 0.0);
+        t.vertex((i33 + 5), (i9 + 1), 0.0);
+        t.vertex((i33 + 5), i9, 0.0);
         
-        t.vertexUV((i33 + 5), i9, 0.0);
-        t.vertexUV((i33 - 4), i9, 0.0);
-        t.vertexUV((i33 - 4), (i9 + 1), 0.0);
+        t.vertex((i33 + 5), i9, 0.0);
+        t.vertex((i33 - 4), i9, 0.0);
+        t.vertex((i33 - 4), (i9 + 1), 0.0);
         let vertices = t.flush()
         Tesselator.drawBuffer(this.buffer, vertices)
     }
