@@ -1,8 +1,10 @@
+precision highp float;
+
 varying highp vec2 vTextureCoord;
 varying highp vec3 vColor;
 
 uniform sampler2D uSampler;
-uniform highp float alphaThreshold;
+uniform float alphaThreshold;
 
 void main(void) {
     highp vec4 texelColor = texture2D(uSampler, vTextureCoord);
