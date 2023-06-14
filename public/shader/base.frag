@@ -31,7 +31,7 @@ void main(void) {
     if(texelColor.a <= alphaThreshold)
         discard;
 
-    if (useTex == 1) {
+    if (useFog == 1) {
         gl_FragColor = mix(rgba, uFogColor, fogAmount);
     } else {
         gl_FragColor = rgba;
