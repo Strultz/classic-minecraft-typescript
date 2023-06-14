@@ -72,8 +72,7 @@ export class Font {
 			color = (color & 16579836) >> 2
 		}
         
-        gl.enable(gl.TEXTURE_2D)
-		gl.bindTexture(gl.TEXTURE_2D, this.fontTexture);
+		gl.bindTexture(gl.TEXTURE_2D, this.fontTexture)
         let t = Tesselator.instance
         t.init(this.buffer)
         t.color_i(color)
@@ -105,7 +104,6 @@ export class Font {
         
         this.vertices = t.flush()
         Tesselator.drawBuffer(this.buffer, this.vertices)
-        //  gl.disable(gl.TEXTURE_2D)
     }
     
     public getWidth(string: string): number {
