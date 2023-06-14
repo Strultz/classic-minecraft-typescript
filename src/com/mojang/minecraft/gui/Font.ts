@@ -7,18 +7,6 @@ export class Font {
     public fontTexture: WebGLTexture = null
     private buffer: WebGLBuffer
     private vertices: number = 0
-    
-    public async loadImage(imageUrl): Promise<HTMLImageElement> {
-        let img: HTMLImageElement;
-        const imageLoadPromise = new Promise(resolve => {
-            img = new window.Image();
-            img.onload = resolve;
-            img.src = imageUrl;
-        });
-
-        await imageLoadPromise;
-        return img;
-    }
 
     public constructor(resourceName: string, textureManager: Textures) {
         let buf = gl.createBuffer()
@@ -27,7 +15,14 @@ export class Font {
         
         let canvas = document.createElement("canvas")
         let context = canvas.getContext("2d")
-        this.loadImage(resourceName).then(img => {
+        
+        let img: HTMLImageElement;
+        const imageLoadPromise = new Promise(resolve => {
+            img = new window.Image();
+            img.onload = resolve;
+            img.src = imageUrl;
+        });
+        imageLoadPromise.then(() => {
             context.drawImage(img, 0, 0)
             
             let i4: number = img.width
@@ -57,10 +52,10 @@ export class Font {
 
                 this.charWidths[i14] = i8
             }
-            
-            console.log("It loaded")
 
             this.fontTexture = textureManager.loadTexture(resourceName, gl.NEAREST)
+            
+            console.log("Font loaded")
         })
     }
     
