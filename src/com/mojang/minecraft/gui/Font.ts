@@ -57,6 +57,8 @@ export class Font {
 
                 this.charWidths[i14] = i8
             }
+            
+            console.log("It loaded")
 
             this.fontTexture = textureManager.loadTexture(resourceName, gl.NEAREST)
         })
@@ -104,7 +106,6 @@ export class Font {
             t.vertexUV((x + i7), (y + 8), 0.0, (color + 8) / 128.0, i9 / 128.0);
             
 			i7 += this.charWidths[ch]
-            console.log(ch)
         }
         
         this.vertices = t.flush()
