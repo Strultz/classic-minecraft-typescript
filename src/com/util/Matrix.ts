@@ -51,6 +51,10 @@ export class Matrix {
         mat4.perspective(this.peek(), fov, aspect, near, far)
     }
 
+    public ortho(left: number, right: number, bottom: number, top: number, near: number, far: number): void {
+        mat4.ortho(this.peek(), left, right, bottom, top, near, far)
+    }
+
     public getFloat(stack: number): number[] {
         let matrixStack = stack == Matrix.MODELVIEW ? this.modelviewStack : this.projectionStack
         let matrix = matrixStack[matrixStack.length - 1]
