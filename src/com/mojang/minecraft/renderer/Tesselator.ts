@@ -8,6 +8,7 @@ export class Tesselator {
     private r: number = 0
     private g: number = 0
     private b: number = 0
+    private a: number = 0
     private len: number = 3
     private p: number = 0
     private buffer: WebGLBuffer = null
@@ -24,10 +25,10 @@ export class Tesselator {
         gl.vertexAttribPointer(0, 2, gl.FLOAT, false, bytesPerFloat * 8, 0)
         gl.enableVertexAttribArray(0)
         // Color RGB
-        gl.vertexAttribPointer(1, 3, gl.FLOAT, false, bytesPerFloat * 8, bytesPerFloat * 2)
+        gl.vertexAttribPointer(1, 4, gl.FLOAT, false, bytesPerFloat * 8, bytesPerFloat * 2)
         gl.enableVertexAttribArray(1)
         // Vertex XYZ
-        gl.vertexAttribPointer(2, 3, gl.FLOAT, false, bytesPerFloat * 8, bytesPerFloat * 5)
+        gl.vertexAttribPointer(2, 3, gl.FLOAT, false, bytesPerFloat * 8, bytesPerFloat * 6)
         gl.enableVertexAttribArray(2)
 
         gl.drawArrays(gl.TRIANGLES, 0, vertices)
@@ -59,11 +60,15 @@ export class Tesselator {
         this.v = v
     }
 
-    public color_f(r: number, g: number, b: number): void {
-
+    public color_f_a(r: number, g: number, b: number, a: number): void {
         this.r = r
         this.g = g
         this.b = b
+        this.a = a
+    }
+
+    public color_f(r: number, g: number, b: number): void {
+        this.color_f_a(r, g, b, 1.0)
     }
 
     public vertexUV(x: number, y: number, z: number, u: number, v: number): void {
@@ -77,6 +82,7 @@ export class Tesselator {
         this.array.push(this.r)
         this.array.push(this.g)
         this.array.push(this.b)
+        this.array.push(this.a)
         this.array.push(x)
         this.array.push(y)
         this.array.push(z)

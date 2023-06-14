@@ -9,6 +9,8 @@ import { Chunk } from "./Chunk";
 import { Level } from "./Level";
 import { LevelListener } from "./LevelListener";
 import { Tesselator } from "../renderer/Tesselator";
+import { Tile } from "./tile/Tile";
+import { Tiles } from "./tile/Tiles";
 
 export class LevelRenderer implements LevelListener {
     public static readonly MAX_REBUILDS_PER_FRAME = 8
@@ -112,6 +114,58 @@ export class LevelRenderer implements LevelListener {
     }
 
     public renderHit(h: HitResult, mode: number, tileType: number): void {
+        let t = Tesselator.instance
+        gl.enable(gl.BLEND)
+		gl.blendFunc(gl.SRC_ALPHA, gl.ONE)
+        t.color_f_a(1.0, 1.0, 1.0, (Math.sin(Date.now() / 100.0) * 0.2 + 0.4) * 0.5)
+        if(mode == 0) {
+            t.init(this.buffer)
+			for (mode = 0; mode < 6; ++mode) {
+				Tile.tiles[tileType].renderFaceNoTexture(t, h.x, h.y, h.z, mode)
+			}
+            Tesselator.drawBuffer(this.buffer, t.flush())
+        } else {
+            gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
+            let f8 = Math.sin(Date.now() / 100.0) * 0.2 + 0.8
+            t.color_f_a(f8, f8, f8, Math.sin(System.currentTimeMillis() / 200.0) * 0.2 + 0.5)
+            Tesselator.setUseTex(true)
+            let i7 = this.textures.loadTexture("./terrain.png", gl.NEAREST)
+            gl.bindTexture(gl.TEXTURE_2D, i7)
+            i7 = hitResult.x
+			mode = hitResult.y
+			let i6 = hitResult.z
+            if(hitResult.f == 0) {
+				--mode
+			}
+
+			if(hitResult.f == 1) {
+				++mode
+			}
+
+			if(hitResult.f == 2) {
+				--i6
+			}
+
+			if(hitResult.f == 3) {
+				++i6
+			}
+
+			if(hitResult.f == 4) {
+				--i7
+			}
+
+			if(hitResult.f == 5) {
+				++i7
+			}
+            
+            t.init(this.buffer)
+			t.color_f(1.0, 1.0, 1.0)
+			Tile.tiles[tileType].render(t, this.level, 0, i7, mode, i6)
+			Tile.tiles[tileType].render(t, this.level, 1, i7, mode, i6)
+            Tesselator.drawBuffer(this.buffer, t.flush())
+            Tesselator.setUseTex(false)
+        }
+        gl.disable(gl.BLEND)
     }
 
     public setDirty(x0: number, y0: number, z0: number, x1: number, y1: number, z1: number): void {
