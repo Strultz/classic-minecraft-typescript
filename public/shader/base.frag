@@ -7,6 +7,7 @@ varying highp vec3 vPosition;
 uniform sampler2D uSampler;
 uniform highp float alphaThreshold;
 uniform int useTex;
+uniform int useFog;
 
 uniform highp vec4 uFogColor;
 uniform highp float uFogDensity;
@@ -30,5 +31,9 @@ void main(void) {
     if(texelColor.a <= alphaThreshold)
         discard;
 
-    gl_FragColor = mix(rgba, uFogColor, fogAmount);
+    if (useTex == 1) {
+        gl_FragColor = mix(rgba, uFogColor, fogAmount);
+    } else {
+        gl_FragColor = rgba;
+    }
 }

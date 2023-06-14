@@ -98,4 +98,8 @@ export class Tesselator {
     public static setUseTex(uv: number): void { // glDisable(GL_TEXTURE_2D)
         gl.uniform1i(shader.getUniformLocation("useTex"), uv)
     }
+    
+    public static setUseFog(fv: number): void { // glDisable(GL_FOG)
+        gl.uniform1i(shader.getUniformLocation("useFog"), fv)
+    }
 }

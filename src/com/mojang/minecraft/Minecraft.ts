@@ -347,6 +347,7 @@ export class Minecraft {
         this.levelRenderer.updateDirtyChunks(this.player)
         this.checkGlError("Update chunks")
         this.setupFog(0)
+        Tesselator.setUseFog(1)
         this.levelRenderer.render(this.player, 0)
         this.checkGlError("Rendered level")
         for (let i = 0; i < this.entities.length; i++) {
@@ -360,6 +361,7 @@ export class Minecraft {
         this.checkGlError("Rendered particles")
         this.setupFog(1)
         this.particleEngine.render(this.player, a, 1)
+        Tesselator.setUseFog(0)
         this.checkGlError("Rendered rest")
         if (this.hitResult != null) {
             Tesselator.alphaFunc(-1.0)
