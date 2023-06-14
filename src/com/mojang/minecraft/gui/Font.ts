@@ -54,4 +54,27 @@ export class Font {
             this.fontTexture = textureManager.loadTexture(resourceName, gl.NEAREST)
         })
     }
+    
+    public drawShadow(string: string, x: number, y: number, color: number): void {
+        this.draw(string, x + 1, y + 1, color, true)
+		this.draw(string, x, y, color, false)
+    }
+    
+    public draw(string: string, x: number, y: number, color: number, darken: boolean): void {
+    
+    }
+    
+    public getWidth(string: string): number {
+        let i2: number = 0
+        
+        for (let c3 of string) {
+            if(c3 == '&') {
+				++i3
+			} else {
+				i2 += this.charWidths[c3]
+			}
+        }
+        
+        return i2
+    }
 }
