@@ -305,8 +305,7 @@ export class Minecraft {
     }
 
     public render(a: number): void {
-		if (shader == null) return
-        gl.uniform1f(shader.getUniformLocation("alphaThreshold"), 0.0)
+        if (shader == null) return
         gl.viewport(0, 0, this.width, this.height)
         if (this.mouseGrabbed) {
             let xo = 0.0
@@ -316,6 +315,11 @@ export class Minecraft {
             this.player.turn(xo, yo * this.yMouseAxis)
         }
         this.checkGlError("Set viewport")
+        shader.use();
+        gl.uniform1f(shader.getUniformLocation("alphaThreshold"), 0.0)
+        gl.uniformMatrix4fv(shader.getUniformLocation("uMVMatrix"), false, new Float32Array(matrix.getFloat(Matrix.MODELVIEW)));
+        gl.uniformMatrix4fv(shader.getUniformLocation("uPMatrix"), false, new Float32Array(matrix.getFloat(Matrix.PROJECTION)));
+        this.checkGlError("Use shader")
         this.pick(a)
         this.checkGlError("Picked")
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)

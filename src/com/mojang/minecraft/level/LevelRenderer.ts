@@ -67,13 +67,9 @@ export class LevelRenderer implements LevelListener {
     }
 
     public render(player: Player, layer: number): void {
-        if (shader == null) return
         let id = this.textures.loadTexture("./terrain.png", gl.NEAREST);
         gl.bindTexture(gl.TEXTURE_2D, id);
         let frustum = Frustum.getFrustum();
-        shader.use();
-        gl.uniformMatrix4fv(shader.getUniformLocation("uMVMatrix"), false, new Float32Array(matrix.getFloat(Matrix.MODELVIEW)));
-        gl.uniformMatrix4fv(shader.getUniformLocation("uPMatrix"), false, new Float32Array(matrix.getFloat(Matrix.PROJECTION)));
 
         for (let chunk of this.chunks) {
             // if (frustum.isVisible(chunk.aabb)) {
