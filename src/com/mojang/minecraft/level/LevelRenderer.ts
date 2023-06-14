@@ -132,7 +132,7 @@ export class LevelRenderer implements LevelListener {
         } else {
             gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
             let f8 = Math.sin(Date.now() / 100.0) * 0.2 + 0.8
-            t.color_f_a(f8, f8, f8, Math.sin(System.currentTimeMillis() / 200.0) * 0.2 + 0.5)
+            t.color_f_a(f8, f8, f8, Math.sin(Date.now() / 200.0) * 0.2 + 0.5)
             Tesselator.setUseTex(true)
             let i7 = this.textures.loadTexture("./terrain.png", gl.NEAREST)
             gl.bindTexture(gl.TEXTURE_2D, i7)
