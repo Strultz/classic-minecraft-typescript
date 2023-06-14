@@ -362,10 +362,10 @@ export class Minecraft {
 		matrix.setActive(Matrix.MODELVIEW)
 		matrix.loadIdentity()
 		matrix.translate(0.0, 0.0, -200.0);
-		reportGLError("GUI: Init");
+		this.checkGlError("GUI: Init");
         this.font.drawShadow("Epic Font Test!", 2, 2, 0xFFFFFF);
         this.font.drawShadow("Cool1*", 98 - this.font.getWidth("Cool1*"), 2, 0xFFFFFF);
-		reportGLError("GUI: Draw text");
+		this.checkGlError("GUI: Draw text");
     }
 
     private setupFog(i: number): void {
