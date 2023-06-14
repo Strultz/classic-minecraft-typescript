@@ -293,7 +293,7 @@ export class Minecraft {
     private setupCamera(a: number): void {
         matrix.setActive(Matrix.PROJECTION)
         matrix.loadIdentity()
-        matrix.perspective(90, this.width / this.height, 0.05, 1000)
+        matrix.perspective(70, this.width / this.height, 0.05, 1000)
         matrix.setActive(Matrix.MODELVIEW)
         matrix.loadIdentity()
         this.moveCameraToPlayer(a)
