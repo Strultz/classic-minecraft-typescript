@@ -14,7 +14,7 @@ uniform highp float uFogDensity;
 
 void main(void) {
     highp vec4 texelColor;
-    if (useTex == 1) {
+    if (useTex != 1) {
         texelColor = texture2D(uSampler, vTextureCoord);
     } else {
         texelColor = vec4(1.0,1.0,1.0,1.0);
@@ -31,7 +31,7 @@ void main(void) {
     if(texelColor.a <= alphaThreshold)
         discard;
 
-    if (useFog == 1) {
+    if (useFog != 1) {
         gl_FragColor = mix(rgba, uFogColor, fogAmount);
     } else {
         gl_FragColor = rgba;

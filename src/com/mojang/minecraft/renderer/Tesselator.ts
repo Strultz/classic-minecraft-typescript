@@ -95,11 +95,11 @@ export class Tesselator {
         gl.uniform1f(shader.getUniformLocation("alphaThreshold"), av)
     }
     
-    public static setUseTex(uv: number): void { // glDisable(GL_TEXTURE_2D)
-        gl.uniform1i(shader.getUniformLocation("useTex"), uv)
+    public static setUseTex(tex: boolean): void { // glDisable(GL_TEXTURE_2D)
+        gl.uniform1i(shader.getUniformLocation("useTex"), tex ? 0 : 1)
     }
     
-    public static setUseFog(fv: number): void { // glDisable(GL_FOG)
-        gl.uniform1i(shader.getUniformLocation("useFog"), fv)
+    public static setUseFog(fog: boolean): void { // glDisable(GL_FOG)
+        gl.uniform1i(shader.getUniformLocation("useFog"), fog ? 0 : 1)
     }
 }
