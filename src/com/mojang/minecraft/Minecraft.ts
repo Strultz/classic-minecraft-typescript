@@ -337,9 +337,9 @@ export class Minecraft {
         this.particleEngine.render(this.player, a, 1)
         this.checkGlError("Rendered rest")
         if (this.hitResult != null) {
-			gl.uniform1f(shader.getUniformLocation("alphaThreshold"), -1.0)
+            gl.uniform1f(shader.getUniformLocation("alphaThreshold"), -1.0)
             this.levelRenderer.renderHit(this.hitResult, this.editMode, this.paintTexture)
-			gl.uniform1f(shader.getUniformLocation("alphaThreshold"), 0.0)
+            gl.uniform1f(shader.getUniformLocation("alphaThreshold"), 0.0)
         }
         this.checkGlError("Rendered hit")
         this.drawGui(a)
