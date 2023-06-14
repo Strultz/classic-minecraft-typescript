@@ -34,7 +34,7 @@ export class Font {
                 let i7: number = Math.trunc(i14 / 16);
                 let i8: number = 0
                 
-                for (let z9: boolean = false; i8 < 0 && !z9; ++i8) {
+                for (let z9: boolean = false; i8 < 8 && !z9; ++i8) {
                     let i10: number = (i5 << 3) + i8
                     z9 = true
                     
