@@ -50,11 +50,17 @@ export class Minecraft {
 
     private frames: number = 0
     private lastTime: number = 0
+    
+    private buffer: WebGLBuffer
 
     private mouse0: boolean = false
     private mouse1: boolean = false
 
     public constructor(parent: HTMLCanvasElement, width: number, height: number) {
+        let buf = gl.createBuffer()
+        if (!buf) throw new Error("Failed to create buffer")
+        this.buffer = buf
+        
         this.parent = parent
         this.width = width
         this.height = height
@@ -380,8 +386,9 @@ export class Minecraft {
         this.checkGlError("GUI: Draw text");
         let i33: number = wt / 2
         let i9: number = ht / 2
+        let t = Tesselator.instance
         t.color_f(1.0, 1.0, 1.0)
-        t.init()
+        t.init(this.buffer)
         t.vertexUV(i33, (i9 + 5), 0.0);
         t.vertexUV((i33 + 1), (i9 + 5), 0.0);
         t.vertexUV((i33 + 1), (i9 - 4), 0.0);
@@ -397,7 +404,8 @@ export class Minecraft {
         t.vertexUV((i33 + 5), i9, 0.0);
         t.vertexUV((i33 - 4), i9, 0.0);
         t.vertexUV((i33 - 4), (i9 + 1), 0.0);
-        t.flush()
+        let vertices = t.flush()
+        Tesselator.drawBuffer(this.buffer, vertices)
     }
 
     private setupFog(i: number): void {
