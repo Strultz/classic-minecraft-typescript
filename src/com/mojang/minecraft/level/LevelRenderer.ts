@@ -21,8 +21,13 @@ export class LevelRenderer implements LevelListener {
     private yChunks: number
     private zChunks: number
     private textures: Textures
+    private buffer: WebGLBuffer
 
     public constructor(level: Level, textures: Textures) {
+        let buf = gl.createBuffer()
+        if (!buf) throw new Error("Failed to create buffer")
+        this.buffer = buf
+        
         this.level = level
         this.textures = textures
         level.addListener(this)
@@ -131,37 +136,37 @@ export class LevelRenderer implements LevelListener {
             Tesselator.setUseTex(true)
             let i7 = this.textures.loadTexture("./terrain.png", gl.NEAREST)
             gl.bindTexture(gl.TEXTURE_2D, i7)
-            i7 = hitResult.x
-			mode = hitResult.y
-			let i6 = hitResult.z
-            if(hitResult.f == 0) {
+            let ix = h.x
+			mode = h.y
+			let i6 = h.z
+            if(h.f == 0) {
 				--mode
 			}
 
-			if(hitResult.f == 1) {
+			if(h.f == 1) {
 				++mode
 			}
 
-			if(hitResult.f == 2) {
+			if(h.f == 2) {
 				--i6
 			}
 
-			if(hitResult.f == 3) {
+			if(h.f == 3) {
 				++i6
 			}
 
-			if(hitResult.f == 4) {
-				--i7
+			if(h.f == 4) {
+				--ix
 			}
 
-			if(hitResult.f == 5) {
-				++i7
+			if(h.f == 5) {
+				++ix
 			}
             
             t.init(this.buffer)
 			t.color_f(1.0, 1.0, 1.0)
-			Tile.tiles[tileType].render(t, this.level, 0, i7, mode, i6)
-			Tile.tiles[tileType].render(t, this.level, 1, i7, mode, i6)
+			Tile.tiles[tileType].render(t, this.level, 0, ix, mode, i6)
+			Tile.tiles[tileType].render(t, this.level, 1, ix, mode, i6)
             Tesselator.drawBuffer(this.buffer, t.flush())
             Tesselator.setUseTex(false)
         }
