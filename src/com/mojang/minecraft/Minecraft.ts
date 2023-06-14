@@ -303,6 +303,13 @@ export class Minecraft {
         let endVec = playerVec.add(offsetX * pickRange, offsetY * pickRange, offsetZ * pickRange)
         this.hitResult = this.level.clip(playerVec, endVec)
     }
+    
+    private setupShader(av: number): void {
+        shader.use();
+        gl.uniformMatrix4fv(shader.getUniformLocation("uMVMatrix"), false, new Float32Array(matrix.getFloat(Matrix.MODELVIEW)));
+        gl.uniformMatrix4fv(shader.getUniformLocation("uPMatrix"), false, new Float32Array(matrix.getFloat(Matrix.PROJECTION)));
+        gl.uniform1f(shader.getUniformLocation("alphaThreshold"), av)
+    }
 
     public render(a: number): void {
         if (shader == null) return
@@ -324,11 +331,7 @@ export class Minecraft {
         let frustum = Frustum.getFrustum()
         this.levelRenderer.updateDirtyChunks(this.player)
         this.checkGlError("Update chunks")
-        shader.use();
-        gl.uniform1f(shader.getUniformLocation("alphaThreshold"), 0.0)
-        gl.uniformMatrix4fv(shader.getUniformLocation("uMVMatrix"), false, new Float32Array(matrix.getFloat(Matrix.MODELVIEW)));
-        gl.uniformMatrix4fv(shader.getUniformLocation("uPMatrix"), false, new Float32Array(matrix.getFloat(Matrix.PROJECTION)));
-        this.checkGlError("Use shader")
+        this.setupShader(0.0)
         this.setupFog(0)
         this.levelRenderer.render(this.player, 0)
         this.checkGlError("Rendered level")
@@ -366,8 +369,7 @@ export class Minecraft {
 		matrix.setActive(Matrix.MODELVIEW)
 		matrix.loadIdentity()
 		matrix.translate(0.0, 0.0, -200.0);
-        gl.uniformMatrix4fv(shader.getUniformLocation("uMVMatrix"), false, new Float32Array(matrix.getFloat(Matrix.MODELVIEW)));
-        gl.uniformMatrix4fv(shader.getUniformLocation("uPMatrix"), false, new Float32Array(matrix.getFloat(Matrix.PROJECTION)));
+        this.setupShader(0.0)
 		this.checkGlError("GUI: Init");
         this.font.drawShadow("Epic Font Test!", 2, 2, 0xFFFFFF);
         this.font.drawShadow("Cool1*", 98 - this.font.getWidth("Cool1*"), 2, 0xFFFFFF);
