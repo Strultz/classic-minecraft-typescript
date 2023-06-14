@@ -1,4 +1,4 @@
-import { gl } from "../Minecraft"
+import { gl, shader } from "../Minecraft"
 
 export class Tesselator {
     private array: number[] = []
