@@ -83,6 +83,7 @@ export class Minecraft {
         gl.clearDepth(1.0)
         gl.enable(gl.DEPTH_TEST)
         gl.depthFunc(gl.LEQUAL)
+        gl.uniform1f(shader.getUniformLocation("alphaThreshold"), 0.0)
         matrix.setActive(Matrix.PROJECTION)
         matrix.loadIdentity()
         matrix.setActive(Matrix.MODELVIEW)
