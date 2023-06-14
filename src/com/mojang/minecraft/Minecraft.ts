@@ -15,6 +15,7 @@ import { Frustum } from "./renderer/Frustum";
 import { Shader } from "../../../shader";
 import { Tiles } from "./level/tile/Tiles";
 import { Vec3 } from "./phys/Vec3";
+import { Font } from "./gui/Font";
 
 export let gl: WebGLRenderingContext
 export let mouse: any
@@ -40,6 +41,7 @@ export class Minecraft {
     public pause: boolean = false
     private yMouseAxis: number = -1
     public textures: Textures
+    public font: Font
     private editMode: number = 0
     private running: boolean = false
     private fpsString: String = ""
@@ -87,6 +89,7 @@ export class Minecraft {
         matrix.loadIdentity()
         matrix.setActive(Matrix.MODELVIEW)
         this.checkGlError("Startup")
+        this.font = new Font("/default.png", this.textures);
         this.level = new Level(256, 256, 64)
         this.levelRenderer = new LevelRenderer(this.level, this.textures)
         this.player = new Player(this.level)
