@@ -119,7 +119,7 @@ export class LevelRenderer implements LevelListener {
     }
 
     public renderHit(h: HitResult, mode: number, tileType: number): void {
-        let t = Tesselator.instance
+        /*let t = Tesselator.instance
         gl.enable(gl.BLEND)
 		gl.blendFunc(gl.SRC_ALPHA, gl.ONE)
         t.color_f_a(1.0, 1.0, 1.0, (Math.sin(Date.now() / 100.0) * 0.2 + 0.4) * 0.5)
@@ -170,7 +170,7 @@ export class LevelRenderer implements LevelListener {
             Tesselator.drawBuffer(this.buffer, t.flush())
             Tesselator.setUseTex(false)
         }
-        gl.disable(gl.BLEND)
+        gl.disable(gl.BLEND)*/
     }
 
     public setDirty(x0: number, y0: number, z0: number, x1: number, y1: number, z1: number): void {

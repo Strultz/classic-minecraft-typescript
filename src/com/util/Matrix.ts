@@ -46,6 +46,10 @@ export class Matrix {
     public rotate(angle: number, x: number, y: number, z: number): void {
         mat4.rotate(this.peek(), this.peek(), angle * Math.PI / 180, [x, y, z])
     }
+    
+    public scale(x: number, y: number, z: number): void {
+        mat4.scale(this.peek(), this.peek(), [x, y, z])
+    }
 
     public perspective(fov: number, aspect: number, near: number, far: number): void {
         mat4.perspective(this.peek(), fov * Math.PI / 180, aspect, near, far)
