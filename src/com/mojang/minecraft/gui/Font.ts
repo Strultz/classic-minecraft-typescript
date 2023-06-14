@@ -69,7 +69,7 @@ export class Font {
         gl.enable(gl.TEXTURE_2D)
 		gl.bindTexture(gl.TEXTURE_2D, this.fontTexture);
         let t = Tesselator.instance
-        t.begin()
+        t.init()
         t.color_i(color)
         
         let i7: number = 0
