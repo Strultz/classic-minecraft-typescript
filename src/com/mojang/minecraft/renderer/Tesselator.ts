@@ -106,6 +106,8 @@ export class Tesselator {
         } else {
             this.color = r << 24 | g << 16 | b << 8 | a
         }
+        
+        console.log(this.color)
     }
 
     public color_f_a(r: number, g: number, b: number, a: number): void {
@@ -135,7 +137,7 @@ export class Tesselator {
         const r: number = (c >> 16) & 0xff
         const g: number = (c >> 8) & 0xff
         const b: number = c & 0xff
-        this.color_f(r / 255, g / 255, b / 255)
+        this.color_i_a(r, g, b, 255)
     }
     
     // Replicating removed gl 1.1 functionality
