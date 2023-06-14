@@ -67,7 +67,7 @@ export class LevelRenderer implements LevelListener {
     }
 
     public render(player: Player, layer: number): void {
-        Tesselator.setUseTex(1)
+        Tesselator.setUseTex(true)
         let id = this.textures.loadTexture("./terrain.png", gl.NEAREST);
         gl.bindTexture(gl.TEXTURE_2D, id);
         let frustum = Frustum.getFrustum();
@@ -77,7 +77,7 @@ export class LevelRenderer implements LevelListener {
                 chunk.render(layer);
             // }
         }
-        Tesselator.setUseTex(0)
+        Tesselator.setUseTex(false)
     }
 
     public updateDirtyChunks(player: Player) {

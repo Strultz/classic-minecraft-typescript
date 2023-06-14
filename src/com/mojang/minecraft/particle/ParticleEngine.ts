@@ -35,7 +35,7 @@ export class ParticleEngine {
 
     public render(player: Player, a: number, layer: number): void {
         if (this.particles.length === 0) return
-        Tesselator.setUseTex(1)
+        Tesselator.setUseTex(true)
         gl.bindTexture(gl.TEXTURE_2D, this.textures.loadTexture("./terrain.png", gl.NEAREST))
         let xa = -(Math.cos(player.yRot * Math.PI / 180))
         let za = -Math.sin(player.yRot * Math.PI / 180)
@@ -52,6 +52,6 @@ export class ParticleEngine {
             }
         }
         Tesselator.drawBuffer(this.buffer, t.flush())
-        Tesselator.setUseTex(0)
+        Tesselator.setUseTex(false)
     }
 }
