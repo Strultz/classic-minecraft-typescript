@@ -313,7 +313,7 @@ export class Minecraft {
         shader.use();
         gl.uniformMatrix4fv(shader.getUniformLocation("uMVMatrix"), false, new Float32Array(matrix.getFloat(Matrix.MODELVIEW)));
         gl.uniformMatrix4fv(shader.getUniformLocation("uPMatrix"), false, new Float32Array(matrix.getFloat(Matrix.PROJECTION)));
-        alphaFunc(av)
+        this.alphaFunc(av)
     }
 
     public render(a: number): void {
@@ -352,9 +352,9 @@ export class Minecraft {
         this.particleEngine.render(this.player, a, 1)
         this.checkGlError("Rendered rest")
         if (this.hitResult != null) {
-            alphaFunc(-1.0)
+            this.alphaFunc(-1.0)
             this.levelRenderer.renderHit(this.hitResult, this.editMode, this.paintTexture)
-            alphaFunc(0.0)
+            this.alphaFunc(0.0)
         }
         this.checkGlError("Rendered hit")
         this.drawGui(a)
