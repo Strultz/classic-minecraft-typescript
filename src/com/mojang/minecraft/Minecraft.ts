@@ -44,7 +44,7 @@ export class Minecraft {
     public font: Font
     private editMode: number = 0
     private running: boolean = false
-    private fpsString: String = ""
+    private fpsString: string = ""
     private mouseGrabbed: boolean = false
     private hitResult: HitResult = null
 
