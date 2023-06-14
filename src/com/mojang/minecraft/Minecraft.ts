@@ -315,11 +315,6 @@ export class Minecraft {
             this.player.turn(xo, yo * this.yMouseAxis)
         }
         this.checkGlError("Set viewport")
-        shader.use();
-        gl.uniform1f(shader.getUniformLocation("alphaThreshold"), 0.0)
-        gl.uniformMatrix4fv(shader.getUniformLocation("uMVMatrix"), false, new Float32Array(matrix.getFloat(Matrix.MODELVIEW)));
-        gl.uniformMatrix4fv(shader.getUniformLocation("uPMatrix"), false, new Float32Array(matrix.getFloat(Matrix.PROJECTION)));
-        this.checkGlError("Use shader")
         this.pick(a)
         this.checkGlError("Picked")
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
@@ -329,6 +324,11 @@ export class Minecraft {
         let frustum = Frustum.getFrustum()
         this.levelRenderer.updateDirtyChunks(this.player)
         this.checkGlError("Update chunks")
+        shader.use();
+        gl.uniform1f(shader.getUniformLocation("alphaThreshold"), 0.0)
+        gl.uniformMatrix4fv(shader.getUniformLocation("uMVMatrix"), false, new Float32Array(matrix.getFloat(Matrix.MODELVIEW)));
+        gl.uniformMatrix4fv(shader.getUniformLocation("uPMatrix"), false, new Float32Array(matrix.getFloat(Matrix.PROJECTION)));
+        this.checkGlError("Use shader")
         this.setupFog(0)
         this.levelRenderer.render(this.player, 0)
         this.checkGlError("Rendered level")
@@ -366,6 +366,8 @@ export class Minecraft {
 		matrix.setActive(Matrix.MODELVIEW)
 		matrix.loadIdentity()
 		matrix.translate(0.0, 0.0, -200.0);
+        gl.uniformMatrix4fv(shader.getUniformLocation("uMVMatrix"), false, new Float32Array(matrix.getFloat(Matrix.MODELVIEW)));
+        gl.uniformMatrix4fv(shader.getUniformLocation("uPMatrix"), false, new Float32Array(matrix.getFloat(Matrix.PROJECTION)));
 		this.checkGlError("GUI: Init");
         this.font.drawShadow("Epic Font Test!", 2, 2, 0xFFFFFF);
         this.font.drawShadow("Cool1*", 98 - this.font.getWidth("Cool1*"), 2, 0xFFFFFF);
