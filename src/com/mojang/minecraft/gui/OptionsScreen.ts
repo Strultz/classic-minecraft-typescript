@@ -40,7 +40,7 @@ export class OptionsScreen extends Screen {
 
     public override render(buffer: RenderBuffer, mx: number, my: number) {
         OptionsScreen.fillGradient(buffer, 0, 0, this.width, this.height, 0x60050500, 0xA0303060)
-        OptionsScreen.drawCenteredString(this.font, this.title, Math.trunc(this.width / 2), 40, 0xFFFFFF)
+        OptionsScreen.drawCenteredString(this.font, this.title, Math.trunc(this.width / 2), 20, 0xFFFFFF)
         super.render(buffer, mx, my)
     }
 }

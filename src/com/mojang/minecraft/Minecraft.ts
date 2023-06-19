@@ -274,9 +274,8 @@ export class Minecraft {
     }
 
     public tick(): void {
-        let oldGrabbed = this.mouseGrabbed
+        //let oldGrabbed = this.mouseGrabbed
         this.mouseGrabbed = document.pointerLockElement == this.parent
-        console.log(oldGrabbed)
         //mouse.setLock(this.mouseGrabbed) // this wasn't actually doing anything
         /*if (this.screen == null && !this.mouseGrabbed && clickedElement == this.parent && (mouse.buttonPressed(MouseButton.LEFT) || mouse.buttonPressed(MouseButton.RIGHT))) {
             this.grabMouse()
@@ -322,9 +321,9 @@ export class Minecraft {
             }
 
             // Keyboard
-            if (!this.mouseGrabbed && this.mouseGrabbed != oldGrabbed) {
+            /*if (!this.mouseGrabbed && this.mouseGrabbed != oldGrabbed) {
                 this.pause()
-            }
+            }*/
             while (keyboard.next()) {
                 this.player.setKey(keyboard.getEventKey() as Key, keyboard.getEventKeyState() as boolean)
                 if (this.screen != null) {
@@ -428,9 +427,9 @@ export class Minecraft {
                 let yo = 0.0
                 xo = MouseEvents.getDX()
                 yo = MouseEvents.getDY()
-                let yMouseAxis = 1
+                let yMouseAxis = -1
                 if (this.options.invertYMouse) {
-                    yMouseAxis = -1
+                    yMouseAxis = 1
                 }
                 if (Math.abs(xo) < 500)
                 {
@@ -587,5 +586,12 @@ export function main() {
     })
 
     const minecraft = new Minecraft(canvas, canvas.width, canvas.height)
+
+    window.addEventListener("pointerlockchange", (e) => {
+        if (document.pointerLockElement !== canvas) {
+            minecraft.pause()
+        }
+    })
+
     minecraft.run()
 }
