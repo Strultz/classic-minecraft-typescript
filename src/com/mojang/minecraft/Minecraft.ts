@@ -45,11 +45,12 @@ export class Minecraft {
     // @ts-ignore
     public level: Level
     // @ts-ignore
-    private levelRenderer: LevelRenderer
+    public levelRenderer: LevelRenderer
     // @ts-ignore
     public player: Player
     // @ts-ignore
-    private particleEngine: ParticleEngine
+    public particleEngine: ParticleEngine
+    public user: User | null = null
     private entities: Entity[] = []
     private parent: HTMLCanvasElement
     public paused: boolean = false

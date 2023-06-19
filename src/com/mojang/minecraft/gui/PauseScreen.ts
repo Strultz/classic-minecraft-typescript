@@ -2,6 +2,7 @@ import { Screen } from "./Screen";
 import { Button } from "./Button";
 import { RenderBuffer } from "../../../util/RenderBuffer";
 import { GenerateLevelScreen } from "./GenerateLevelScreen";
+import { OptionsScreen } from "./OptionsScreen";
 
 export class PauseScreen extends Screen {
 
@@ -16,11 +17,21 @@ export class PauseScreen extends Screen {
         this.buttons.push(new Button(2, Math.trunc(this.width / 2) - 100, Math.trunc(this.height / 4) + 48, "Save level.."))
         this.buttons.push(new Button(3, Math.trunc(this.width / 2) - 100, Math.trunc(this.height / 4) + 72, "Load level.."))
         this.buttons.push(new Button(4, Math.trunc(this.width / 2) - 100, Math.trunc(this.height / 4) + 120, "Back to game"))
+        if (this.minecraft.user == null) {
+            this.buttons.get[2].active = false
+            this.buttons.get[3].active = false
+        }
+   
+        /*if (this.minecraft.networkManager != null) {
+            this.buttons.get[1].active = false
+            this.buttons.get[2].active = false
+            this.buttons.get[3].active = false
+        }*/
     }
 
     public override buttonClicked(button: Button): void {
         if (button.id == 0) {
-
+            this.minecraft.setScreen(new OptionsScreen(this, this.minecraft.options))
         }
         if (button.id == 1) {
             this.minecraft.setScreen(new GenerateLevelScreen(this))
@@ -35,7 +46,7 @@ export class PauseScreen extends Screen {
 
     public override render(buffer: RenderBuffer, mx: number, my: number) {
         PauseScreen.fillGradient(buffer, 0, 0, this.width, this.height, 0x60050500, 0xA0303060)
-        PauseScreen.drawCenteredString(this.minecraft.font, "Game menu", Math.trunc(this.width / 2), 40, 0xFFFFFF)
+        PauseScreen.drawCenteredString(this.font, "Game menu", Math.trunc(this.width / 2), 40, 0xFFFFFF)
         super.render(buffer, mx, my)
     }
 }
