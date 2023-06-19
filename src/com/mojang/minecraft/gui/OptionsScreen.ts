@@ -27,7 +27,7 @@ export class OptionsScreen extends Screen {
         if (button.active) {
             if (button.id < 100) {
                 this.options.setValue(button.id, 1)
-                button.message = this.settings.getMessage(var1)
+                button.message = this.options.getMessage(var1)
             }
             if (button.id == 100) {
                 //this.minecraft.setScreen(new ControlsScreen(this, this.options))
