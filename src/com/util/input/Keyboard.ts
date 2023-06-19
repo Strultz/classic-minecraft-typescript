@@ -102,7 +102,6 @@ export class Keyboard {
 
     constructor() {
         document.addEventListener("keydown", (event: KeyboardEvent) => {
-            if (document.pointerLockElement === null) return
             event.preventDefault()
             if (!this.repeatEnabled && event.repeat) {
                 return
@@ -114,7 +113,6 @@ export class Keyboard {
         })
 
         document.addEventListener("keyup", (event: KeyboardEvent) => {
-            if (document.pointerLockElement === null) return
             event.preventDefault()
             while (this.eventQueue.length >= Keyboard.MAX_EVENTS) {
                 this.eventQueue.shift()

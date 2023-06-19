@@ -156,6 +156,7 @@ export class Minecraft {
             if (this.mouseGrabbed) {
                 this.mouseGrabbed = false
                 MouseEvents.setGrabbed(false)
+                this.didJustUnlock = true
             }
             let screenWidth = Math.trunc(this.width * 240 / this.height)
             let screenHeight = Math.trunc(this.height * 240 / this.height)
@@ -588,7 +589,7 @@ export function main() {
     const minecraft = new Minecraft(canvas, canvas.width, canvas.height)
 
     window.addEventListener("pointerlockchange", (e) => {
-        if (document.pointerLockElement !== canvas) {
+        if (document.pointerLockElement != canvas && minecraft.screen != null) {
             minecraft.pause()
         }
     })
