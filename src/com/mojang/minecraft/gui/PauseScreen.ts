@@ -18,14 +18,14 @@ export class PauseScreen extends Screen {
         this.buttons.push(new Button(3, Math.trunc(this.width / 2) - 100, Math.trunc(this.height / 4) + 72, "Load level.."))
         this.buttons.push(new Button(4, Math.trunc(this.width / 2) - 100, Math.trunc(this.height / 4) + 120, "Back to game"))
         if (this.minecraft.user == null) {
-            this.buttons.get[2].active = false
-            this.buttons.get[3].active = false
+            this.buttons[2].active = false
+            this.buttons[3].active = false
         }
    
         /*if (this.minecraft.networkManager != null) {
-            this.buttons.get[1].active = false
-            this.buttons.get[2].active = false
-            this.buttons.get[3].active = false
+            this.buttons[1].active = false
+            this.buttons[2].active = false
+            this.buttons[3].active = false
         }*/
     }
 

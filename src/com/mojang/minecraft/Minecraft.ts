@@ -63,11 +63,11 @@ export class Minecraft {
     // @ts-ignore
     public gui: Gui
     private running: boolean = false
-    private fpsString: string = ""
+    public fpsString: string = ""
     private mouseGrabbed: boolean = false
-    private hitResult: HitResult | null = null
+    public hitResult: HitResult | null = null
     // @ts-ignore
-    private options: Options
+    public options: Options
 
     private frames: number = 0
     private lastTime: number = 0
