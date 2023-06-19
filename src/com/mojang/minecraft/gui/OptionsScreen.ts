@@ -17,7 +17,7 @@ export class OptionsScreen extends Screen {
 
     public override init2(): void {
         for (let i: number = 0; i < this.options.numOptions; ++i) {
-            this.buttons.push(new SmallButton(i, Math.trunc(this.width / 2) - 100 + i % 2 * 160, Math.trunc(this.height / 6) + 24 * (i >> 1), this.settings.getMessage(i)))
+            this.buttons.push(new SmallButton(i, Math.trunc(this.width / 2) - 100 + i % 2 * 160, Math.trunc(this.height / 6) + 24 * (i >> 1), this.options.getMessage(i)))
         }
         this.buttons.push(new Button(100, Math.trunc(this.width / 2) - 100, Math.trunc(this.height / 6) + 120 + 12, "Controls..."))
         this.buttons.push(new Button(200, Math.trunc(this.width / 2) - 100, Math.trunc(this.height / 6) + 168, "Done"))
