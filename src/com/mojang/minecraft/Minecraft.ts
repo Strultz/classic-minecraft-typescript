@@ -54,7 +54,6 @@ export class Minecraft {
     private entities: Entity[] = []
     private parent: HTMLCanvasElement
     public paused: boolean = false
-    private yMouseAxis: number = -1
     public textures: Textures
     // @ts-ignore
     public font: Font
@@ -277,6 +276,7 @@ export class Minecraft {
     public tick(): void {
         let oldGrabbed = this.mouseGrabbed
         this.mouseGrabbed = document.pointerLockElement == this.parent
+        console.log(oldGrabbed)
         //mouse.setLock(this.mouseGrabbed) // this wasn't actually doing anything
         /*if (this.screen == null && !this.mouseGrabbed && clickedElement == this.parent && (mouse.buttonPressed(MouseButton.LEFT) || mouse.buttonPressed(MouseButton.RIGHT))) {
             this.grabMouse()
@@ -293,7 +293,7 @@ export class Minecraft {
                         this.player.inventory.swapPaint(MouseEvents.getEventDWheel())
                     }
                     if (!this.mouseGrabbed && MouseEvents.getEventButtonState() && clickedElement == this.parent) {
-                        this.grabMouse();
+                        this.grabMouse()
                     } else {
                         if (MouseEvents.getEventButton() == MouseButton.LEFT && MouseEvents.getEventButtonState()) {
                             this.handleMouseClick(0)
@@ -334,9 +334,6 @@ export class Minecraft {
                     if (this.screen == null) {
                         if (keyboard.getEventKey() == Keyboard.KEY_RETURN) {
                             this.level.save()
-                        }
-                        if (keyboard.getEventKey() == Keyboard.KEY_Y) {
-                            this.yMouseAxis *= -1
                         }
                         if (keyboard.getEventKey() == Keyboard.KEY_G) {
                             this.entities.push(new Zombie(this.level, this.textures, this.player.x, this.player.y, this.player.z))
@@ -431,9 +428,13 @@ export class Minecraft {
                 let yo = 0.0
                 xo = MouseEvents.getDX()
                 yo = MouseEvents.getDY()
+                let yMouseAxis = 1
+                if (this.options.invertYMouse) {
+                    yMouseAxis = -1
+                }
                 if (Math.abs(xo) < 500)
                 {
-                    this.player.turn(xo, yo * this.yMouseAxis)
+                    this.player.turn(xo, yo * yMouseAxis)
                 }
             }
             this.checkGlError("Set viewport")
@@ -557,12 +558,6 @@ export function main() {
     let g = canvas.getContext("webgl", {antialias: false})
     if (!g) throw new Error("Failed to get WebGL context")
     gl = g
-
-    window.addEventListener("keydown", (e) => {
-        if ((e as KeyboardEvent).code == "Space" && clickedElement == canvas) {
-            e.preventDefault()
-        }
-    })
 
     window.addEventListener("mousedown", (e) => {
         clickedElement = e.target as HTMLElement
